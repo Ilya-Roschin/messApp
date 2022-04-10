@@ -4,17 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @Setter
 public class UserDto {
 
-    //@NotBlank(message = "chat id is incorrect")
     private Long id;
 
     @NotBlank(message = "chat id is incorrect")
     private String username;
 
-    @NotBlank(message = "chat id is incorrect")
+    @NotBlank(message = "password is incorrect")
     private String password;
+
+    private List<Long> chatIds;
+
+    private List<Long> messageIds;
+
 }

@@ -10,7 +10,6 @@ import java.sql.Time;
 @Setter
 public class MessageDto {
 
-    @NotBlank(message = "id is incorrect")
     private Long id;
 
     @NotBlank(message = "text is incorrect")
@@ -18,4 +17,12 @@ public class MessageDto {
 
     @NotBlank(message = "time is incorrect")
     private Time time;
+
+    @NotBlank(message = "userId is incorrect")
+    private long userId;
+
+    @NotBlank(message = "userId is incorrect")
+    private long chatId;
+
+
 }
