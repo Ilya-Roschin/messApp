@@ -33,8 +33,14 @@ public class UserService {
     }
 
     public void save(final UserDto userDto) {
+        System.out.println(userMapper.toEntity(userDto));
         userRepository.save(userMapper.toEntity(userDto));
     }
 
+    public void findAllChatsByUserId(final Long id) {
+        userRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("user not founded by id: "  + id)).getChats();
+
+    }
 
 }

@@ -10,7 +10,9 @@ import com.java.uioks.messApp.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class UserMapper {
@@ -40,10 +42,16 @@ public class UserMapper {
     }
 
     private List<Chat> findChatsByIds(List<Long> chatIds) {
+        if (Objects.equals(chatIds, null)) {
+            return new ArrayList<Chat>();
+        }
           return chatRepository.findAllById(chatIds);
     }
 
     private List<Message> findMessagesByIds(List<Long> messageIds) {
+        if (Objects.equals(messageIds, null)) {
+            return new ArrayList<Message>();
+        }
         return messageRepository.findAllById(messageIds);
     }
 
