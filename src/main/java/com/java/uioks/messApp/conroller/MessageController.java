@@ -22,7 +22,6 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-
     @GetMapping("/messages")
     public List<MessageDto> findAllMessages() {
         return messageService.findAllMessages();

@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,4 +42,11 @@ public class Chat {
     @ManyToMany(mappedBy = "chats")
     private List<User> users;
 
+    public void addMessage(Message message) {
+        messages.add(message);
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
 }

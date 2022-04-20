@@ -45,4 +45,10 @@ public class UserService {
 
     }
 
+    public User findUserById(final Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("user not founded: " + id));
+    }
 }
+

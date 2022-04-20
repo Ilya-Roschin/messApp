@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,5 +51,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private List<Chat> chats;
 
+    public void addMessage(Message message) {
+        messages.add(message);
+    }
 
+    public void addChat(Chat chat) {
+        chats.add(chat);
+    }
 }
