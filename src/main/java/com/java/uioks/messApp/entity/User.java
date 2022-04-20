@@ -47,7 +47,7 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_has_chat",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn (name = "chat_id"))
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private List<Chat> chats;
 
 

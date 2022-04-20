@@ -45,7 +45,7 @@ public class UserMapper {
         if (Objects.equals(chatIds, null)) {
             return new ArrayList<Chat>();
         }
-          return chatRepository.findAllById(chatIds);
+        return chatRepository.findAllById(chatIds);
     }
 
     private List<Message> findMessagesByIds(List<Long> messageIds) {
