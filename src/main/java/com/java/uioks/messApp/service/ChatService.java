@@ -2,9 +2,11 @@ package com.java.uioks.messApp.service;
 
 import com.java.uioks.messApp.dto.ChatDto;
 import com.java.uioks.messApp.entity.Chat;
+import com.java.uioks.messApp.entity.User;
 import com.java.uioks.messApp.exception.EntityNotFoundException;
 import com.java.uioks.messApp.mapper.ChatMapper;
 import com.java.uioks.messApp.repository.ChatRepository;
+import com.java.uioks.messApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class ChatService {
 
     @Autowired
     private ChatRepository chatRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -32,20 +37,33 @@ public class ChatService {
     public void createChat(final Long userId, final String chatName) {
         Chat chat = new Chat();
         chat.setName(chatName);
-        chat.addUser(userService.findUserById(userId));
-        System.out.println(chat);
-        //chatRepository.save(chat);
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new EntityNotFoundException("user not founded by id: " + userId));
+        user.addChat(chat);
+        chat.addUser(user);
+        chatRepository.save(chat);
         // TODO: 21.04.2022 refactor
     }
 
+    public void addUserToChat(Long userId, Long chatId) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new EntityNotFoundException("user not founded by id: " + userId));
+        Chat chat = chatRepository.findById(chatId).orElseThrow(() ->
+                new EntityNotFoundException("chat not founded by id: " + chatId));
+        user.addChat(chat);
+        chat.addUser(user);
+        chatRepository.save(chat);
+    }
+
     public List<ChatDto> findAllChatsByUserId(final Long userId) {
-        return userService.findUserById(userId).getChats().stream()
+        return userRepository.findById(userId).orElseThrow(() ->
+                        new EntityNotFoundException("user not founded by id: " + userId)).getChats().stream()
                 .map(chatMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public List<ChatDto> findAllChats() {
-       return chatRepository.findAll().stream()
+        return chatRepository.findAll().stream()
                 .map(chatMapper::toDto)
                 .collect(Collectors.toList());
     }

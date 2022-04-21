@@ -23,7 +23,7 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
-    @GetMapping("/chats/{user_id}")
+    @GetMapping("/chats/findAll/user/{user_id}")
     public List<ChatDto> findAllChatsByUserId(@PathVariable final Long user_id) {
         return chatService.findAllChatsByUserId(user_id);
     }
@@ -33,15 +33,19 @@ public class ChatController {
         return chatService.findAllChats();
     }
 
-    @GetMapping("/chats/{user_id}/{chat_id}")
+    @GetMapping("/chats/find/{chat_id}")
     public ChatDto getChatById(@PathVariable final long chat_id) {
         return chatService.getChatById(chat_id);
     }
 
-    @PostMapping("/chats/{user_id}/create")
+    @PostMapping("/chats/create/{user_id}")
     public void createNewChat(@PathVariable final long user_id, @RequestBody String chatName) {
         chatService.createChat(user_id, chatName);
     }
 
+    @PostMapping("/chats/{chat_id}/addToChat/{user_id}")
+    public void addUserToChat(@PathVariable final long user_id, @PathVariable final long chat_id) {
+        chatService.addUserToChat(user_id, chat_id);
+    }
 
 }

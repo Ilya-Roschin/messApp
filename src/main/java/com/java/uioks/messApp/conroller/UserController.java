@@ -37,7 +37,7 @@ public class UserController {
         return userService.findUserDtoById(user_id);
     }
 
-    @GetMapping("users/login")
+    @PostMapping("users/login")
     public boolean isUserAuthorised(@RequestBody final UserDto userDto) {
         return userService.isUserAuthorised(userDto);
     }
