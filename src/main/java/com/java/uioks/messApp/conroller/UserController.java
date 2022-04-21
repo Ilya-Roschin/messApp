@@ -1,10 +1,6 @@
 package com.java.uioks.messApp.conroller;
 
-import com.java.uioks.messApp.dto.ChatDto;
-import com.java.uioks.messApp.dto.MessageDto;
 import com.java.uioks.messApp.dto.UserDto;
-import com.java.uioks.messApp.entity.Chat;
-import com.java.uioks.messApp.entity.User;
 import com.java.uioks.messApp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +21,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("users/findAll")
     public List<UserDto> findAll() {
         return userService.findAll();
     }
 
-    @PostMapping
-    public void saveUser(@RequestBody final UserDto userDto) {
+
+    @PostMapping("/users/create")
+    public void createUser(@RequestBody final UserDto userDto) {
         userService.save(userDto);
     }
 
-    @GetMapping("/{id}")
-    public List<User> findUserById(@PathVariable final long id) {
-        return null;
+    @GetMapping("/users/find/{user_id}")
+    public UserDto findUserById(@PathVariable final Long user_id) {
+        return userService.findUserDtoById(user_id);
     }
 
-
+    @GetMapping("users/login")
+    public boolean isUserAuthorised(@RequestBody final UserDto userDto) {
+        return userService.isUserAuthorised(userDto);
+    }
 }
 
 

@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class User {
 
     @Id
@@ -52,10 +50,16 @@ public class User {
     private List<Chat> chats;
 
     public void addMessage(Message message) {
+        if (messages == null) {
+            messages = new ArrayList<>();
+        }
         messages.add(message);
     }
 
     public void addChat(Chat chat) {
+        if (chats == null) {
+            chats = new ArrayList<>();
+        }
         chats.add(chat);
     }
 }

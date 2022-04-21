@@ -8,6 +8,9 @@ import com.java.uioks.messApp.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ChatService {
 
@@ -26,11 +29,24 @@ public class ChatService {
                 new EntityNotFoundException("chat not founded by id: " + chatId)));
     }
 
-    public void createChat(Long userId, String chatName) {
+    public void createChat(final Long userId, final String chatName) {
         Chat chat = new Chat();
         chat.setName(chatName);
         chat.addUser(userService.findUserById(userId));
-        chatRepository.save(chat);
+        System.out.println(chat);
+        //chatRepository.save(chat);
+        // TODO: 21.04.2022 refactor
     }
 
+    public List<ChatDto> findAllChatsByUserId(final Long userId) {
+        return userService.findUserById(userId).getChats().stream()
+                .map(chatMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<ChatDto> findAllChats() {
+       return chatRepository.findAll().stream()
+                .map(chatMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }

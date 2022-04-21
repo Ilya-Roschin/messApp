@@ -24,8 +24,13 @@ public class ChatController {
     private ChatService chatService;
 
     @GetMapping("/chats/{user_id}")
-    public List<Chat> findAllChatsByUserId(@PathVariable final long user_id) {
-        return null;
+    public List<ChatDto> findAllChatsByUserId(@PathVariable final Long user_id) {
+        return chatService.findAllChatsByUserId(user_id);
+    }
+
+    @GetMapping("/chats/findAll")
+    public List<ChatDto> findAllChat() {
+        return chatService.findAllChats();
     }
 
     @GetMapping("/chats/{user_id}/{chat_id}")
@@ -33,9 +38,10 @@ public class ChatController {
         return chatService.getChatById(chat_id);
     }
 
-   @PostMapping("/chats/{user_id}/create")
+    @PostMapping("/chats/{user_id}/create")
     public void createNewChat(@PathVariable final long user_id, @RequestBody String chatName) {
         chatService.createChat(user_id, chatName);
-   }
+    }
+
 
 }

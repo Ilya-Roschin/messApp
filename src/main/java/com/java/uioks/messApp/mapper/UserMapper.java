@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -28,7 +29,12 @@ public class UserMapper {
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
-        userDto.setChatIds(userDto.getChatIds());
+        userDto.setChatIds(user.getChats().stream()
+                .map(Chat::getId)
+                .collect(Collectors.toList()));
+        userDto.setMessageIds(user.getMessages().stream()
+                .map(Message::getId)
+                .collect(Collectors.toList()));
         return userDto;
     }
 

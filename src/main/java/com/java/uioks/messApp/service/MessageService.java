@@ -1,6 +1,7 @@
 package com.java.uioks.messApp.service;
 
 import com.java.uioks.messApp.dto.MessageDto;
+import com.java.uioks.messApp.exception.EntityNotFoundException;
 import com.java.uioks.messApp.mapper.MessageMapper;
 import com.java.uioks.messApp.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,14 @@ public class MessageService {
         messageDto.setChatId(chatId);
         System.out.println(messageDto);
         messageRepository.save(messageMapper.toEntity(messageDto));
+    }
+
+    public void deleteById(final Long messageId) {
+        messageRepository.deleteById(messageId);
+    }
+
+    public MessageDto findById(final Long id) {
+        return messageMapper.toDto(messageRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("message not founded by id: " + id)));
     }
 }

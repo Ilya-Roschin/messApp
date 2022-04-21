@@ -1,7 +1,5 @@
 package com.java.uioks.messApp.service;
 
-import com.java.uioks.messApp.dto.ChatDto;
-import com.java.uioks.messApp.dto.MessageDto;
 import com.java.uioks.messApp.dto.UserDto;
 import com.java.uioks.messApp.entity.User;
 import com.java.uioks.messApp.exception.EntityNotFoundException;
@@ -23,6 +21,7 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<UserDto> findAll() {
+        userRepository.findAll().forEach(System.out::println);
         return userRepository.findAll().stream()
                 .map(user -> userMapper.toDto(user))
                 .collect(Collectors.toList());
@@ -41,14 +40,23 @@ public class UserService {
 
     public void findAllChatsByUserId(final Long id) {
         userRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("user not founded by id: " + id)).getChats();
+                new EntityNotFoundException("user not founded by id: " + id));
 
     }
 
     public User findUserById(final Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("user not founded: " + id));
+        return userRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("user not founded by id: " + id));
+    }
+
+    public UserDto findUserDtoById(final Long id) {
+        return userMapper.toDto(findUserById(id));
+    }
+
+    public boolean isUserAuthorised(UserDto userDto) {
+        User user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() ->
+                new EntityNotFoundException("user not founded by name: " + userDto.getUsername()));
+        return userDto.getPassword().equals(user.getPassword());
     }
 }
 
