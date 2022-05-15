@@ -27,15 +27,17 @@ public class MessageMapper {
         messageDto.setText(message.getText());
         messageDto.setChatId(message.getChat().getId());
         messageDto.setTime(message.getTime());
+        messageDto.setUserId(message.getUser().getId());
         return messageDto;
     }
 
     public Message toEntity(final MessageDto messageDto) {
+        User user = userRepository.findById(messageDto.getUserId()).orElseThrow();
         return Message.builder()
                 .chat(findChatById(messageDto.getChatId()))
                 .time(messageDto.getTime())
                 .text(messageDto.getText())
-                .user(findUserById(messageDto.getUserId()))
+                .user(user)
                 .build();
     }
 

@@ -26,7 +26,6 @@ public class UserController {
         return userService.findAll();
     }
 
-
     @PostMapping("/users/create")
     public void createUser(@RequestBody final UserDto userDto) {
         userService.save(userDto);
@@ -38,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("users/login")
-    public boolean isUserAuthorised(@RequestBody final UserDto userDto) {
+    public long isUserAuthorised(@RequestBody final UserDto userDto) {
         return userService.isUserAuthorised(userDto);
     }
 }

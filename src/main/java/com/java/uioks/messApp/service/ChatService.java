@@ -1,6 +1,7 @@
 package com.java.uioks.messApp.service;
 
 import com.java.uioks.messApp.dto.ChatDto;
+import com.java.uioks.messApp.dto.TextDto;
 import com.java.uioks.messApp.entity.Chat;
 import com.java.uioks.messApp.entity.User;
 import com.java.uioks.messApp.exception.EntityNotFoundException;
@@ -34,15 +35,14 @@ public class ChatService {
                 new EntityNotFoundException("chat not founded by id: " + chatId)));
     }
 
-    public void createChat(final Long userId, final String chatName) {
+    public void createChat(final Long userId, final TextDto chatName) {
         Chat chat = new Chat();
-        chat.setName(chatName);
+        chat.setName(chatName.getText());
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException("user not founded by id: " + userId));
         user.addChat(chat);
         chat.addUser(user);
         chatRepository.save(chat);
-        // TODO: 21.04.2022 refactor
     }
 
     public void addUserToChat(Long userId, Long chatId) {

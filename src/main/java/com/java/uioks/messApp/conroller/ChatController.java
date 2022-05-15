@@ -2,6 +2,7 @@ package com.java.uioks.messApp.conroller;
 
 
 import com.java.uioks.messApp.dto.ChatDto;
+import com.java.uioks.messApp.dto.TextDto;
 import com.java.uioks.messApp.entity.Chat;
 import com.java.uioks.messApp.service.ChatService;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class ChatController {
     }
 
     @PostMapping("/chats/create/{user_id}")
-    public void createNewChat(@PathVariable final long user_id, @RequestBody String chatName) {
+    public void createNewChat(@PathVariable final long user_id, @RequestBody TextDto chatName) {
         chatService.createChat(user_id, chatName);
     }
 
@@ -47,5 +48,4 @@ public class ChatController {
     public void addUserToChat(@PathVariable final long user_id, @PathVariable final long chat_id) {
         chatService.addUserToChat(user_id, chat_id);
     }
-
 }

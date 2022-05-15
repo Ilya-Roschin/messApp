@@ -53,10 +53,15 @@ public class UserService {
         return userMapper.toDto(findUserById(id));
     }
 
-    public boolean isUserAuthorised(UserDto userDto) {
+    public long isUserAuthorised(UserDto userDto) {
         User user = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() ->
                 new EntityNotFoundException("user not founded by name: " + userDto.getUsername()));
-        return userDto.getPassword().equals(user.getPassword());
+
+        if (userDto.getPassword().equals(user.getPassword())) {
+            return userDto.getId();
+        } else {
+            return 0;
+        }
     }
 }
 
